@@ -43,23 +43,37 @@
 #define WOKWI_PIN 13
 
 #include <Arduino.h>
-#include <LiquidCrystal.h>
 #include <Input.hpp>
+#include <Graphics.hpp>
 
 // initialize the library by associating any needed LCD interface pin
 // with the arduino pin number it is connected to
-const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+lcd_pins graphics_pins = {
+  register_select: 12,
+  enable: 11,
+  d4: 5,
+  d5: 4,
+  d6: 3,
+  d7: 2
+};
 
 void setup() {
   Serial.begin(9600);
+
   init_input(WOKWI_PIN, IR_RECEIVE_PIN);
-  // set up the LCD's number of columns and rows:
-  lcd.begin(16, 2);
+  init_graphics(graphics_pins);
+
   // Print a message to the LCD.
-  lcd.write(" \xff"); lcd.write("1234"); lcd.write("\xff \x7e\xff"); lcd.write("abcd"); lcd.write("\xff");
-  lcd.setCursor(0, 1);
-  lcd.write(" \xff"); lcd.write("5678"); lcd.write("\xff\x7e \xff"); lcd.write("efgh"); lcd.write("\xff");
+  draw_character(LEFT_BORDER, {x: 1, y: 0});
+  draw_character(LEFT_BORDER, {x: 1, y: 1});
+  draw_character(RIGHT_BORDER, {x: 6, y: 0});
+  draw_character(RIGHT_BORDER, {x: 6, y: 1});
+  draw_character(LEFT_BORDER, {x: 9, y: 0});
+  draw_character(LEFT_BORDER, {x: 9, y: 1});
+  draw_character(RIGHT_BORDER, {x: 14, y: 0});
+  draw_character(RIGHT_BORDER, {x: 14, y: 1});
+  draw_character(RIGHT_ARROW, {x: 7, y: 1});
+  draw_character(RIGHT_ARROW, {x: 8, y: 0});
 }
 
 int times = 0;

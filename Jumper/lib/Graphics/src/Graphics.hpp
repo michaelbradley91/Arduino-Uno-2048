@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Arduino.h>
+
 /**
  * @brief Assume size of LCD board
  * 
@@ -10,9 +12,31 @@
 /**
  * @brief Useful constants
  */
-#define CELL_CLEAR '\xfe'
-#define CELL_BLOCK '\xff'
-#define NUM_1024 '\xff'
+#define LEFT_BORDER  '\x00'
+#define RIGHT_BORDER '\x01'
+#define NUM_16       '\x02'
+#define NUM_32       '\x03'
+#define NUM_64       '\x04'
+#define NUM_128      '\x05'
+#define NUM_256      '\x06'
+#define NUM_512      '\x07'
+#define RIGHT_ARROW  '\x7e'
+#define CELL_CLEAR   '\xfe'
+#define CELL_BLOCK   '\xff'
+#define NUM_1024     '\xff'
+
+#define LEFT_BORDER_STR  "\x00"
+#define RIGHT_BORDER_STR "\x01"
+#define NUM_16_STR       "\x02"
+#define NUM_32_STR       "\x03"
+#define NUM_64_STR       "\x04"
+#define NUM_128_STR      "\x05"
+#define NUM_256_STR      "\x06"
+#define NUM_512_STR      "\x07"
+#define RIGHT_ARROW_STR  "\x7e"
+#define CELL_CLEAR_STR   "\xfe"
+#define CELL_BLOCK_STR   "\xff"
+#define NUM_1024_STR     "\xff"
 
 /**
  * @brief Type for passing the pin information to the graphics library
@@ -44,17 +68,8 @@ typedef struct
     int y;
 } position;
 
-/**
- * @brief The range of symbols that can be drawn with the graphics library
- */
-typedef enum
-{
-    LEFT_BORDER = 0,
-    RIGHT_BORDER = 1,
-    NUM_16 = 2,
-    NUM_32 = 3,
-    NUM_64 = 4,
-    NUM_128 = 5,
-    NUM_256 = 6,
-    NUM_512 = 7
-} SYMBOL;
+void init_graphics(lcd_pins pins);
+void draw_character(const char character, position position);
+void draw_number(int number, position position);
+void draw_text(const char *text, position start_position);
+lcd_state get_current_lcd_state();

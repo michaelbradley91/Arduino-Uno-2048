@@ -19,12 +19,12 @@ byte num_512[]      = { B11111, B10001, B11111, B11111, B11111, B11111, B11111, 
 /**
  * @brief The liquid crystal display itself
  */
-static LiquidCrystal lcd;
+static LiquidCrystal lcd(0, 0, 0, 0, 0, 0);
 
 /**
  * @brief We keep a record of which characters are drawn where
  */
-static lcd_state state = {0};
+static lcd_state state;
 
 /**
  * @brief Initialise the graphics library
@@ -54,26 +54,35 @@ void init_graphics(lcd_pins pins)
     }
 }
 
+/**
+ * @brief Draw a single character to the screen
+ * 
+ * @param character - the character to draw
+ * @param position - where to draw the character
+ */
 void draw_character(const char character, position position)
 {
     lcd.setCursor(position.x, position.y);
-    lcd.write(&character);
+    lcd.write(character);
     state.grid[position.x][position.y] = byte(character);
 }
 
-void draw_symbol(SYMBOL symbol, position position)
-{
-    lcd.setCursor(position.x, position.y);
-    byte symbol_byte = byte(symbol);
-    lcd.write(symbol_byte);
-    state.grid[position.x][position.y] = byte(symbol);
-}
-
+/**
+ * @brief Get the state of the LCD screen
+ * 
+ * @return lcd_state - the state of the screen
+ */
 lcd_state get_current_lcd_state()
 {
     return state;
 }
 
+/**
+ * @brief Draw a number in the 2048 sequence
+ * 
+ * @param number - the number to draw - a power of 2 from 1 to 2048
+ * @param position - where to draw the number
+ */
 void draw_number(int number, position position)
 {
     switch(number)
@@ -87,17 +96,17 @@ void draw_number(int number, position position)
         case 8:
             return draw_character('8', position);
         case 16:
-            return draw_symbol(NUM_16, position);
+            return draw_character(NUM_16, position);
         case 32:
-            return draw_symbol(NUM_32, position);
+            return draw_character(NUM_32, position);
         case 64:
-            return draw_symbol(NUM_64, position);
+            return draw_character(NUM_64, position);
         case 128:
-            return draw_symbol(NUM_128, position);
+            return draw_character(NUM_128, position);
         case 256:
-            return draw_symbol(NUM_256, position);
+            return draw_character(NUM_256, position);
         case 512:
-            return draw_symbol(NUM_512, position);
+            return draw_character(NUM_512, position);
         case 1024:
             return draw_character(NUM_1024, position);
         default:
@@ -105,3 +114,25 @@ void draw_number(int number, position position)
     }
 }
 
+/**
+ * @brief Draw text starting at the given position
+ * 
+ * @param text - the text to draw
+ * @param start_position - where to start drawing
+ */
+void draw_text(const char *text, position start_position)
+{
+    position new_position = start_position;
+    for (unsigned int i = 0; i < strlen(text); i++)
+    {
+        Serial.println("Drawing character at position: ");
+        Serial.print(new_position.x);
+        Serial.print(", ");
+        Serial.print(new_position.y);
+        Serial.print(", ");
+        Serial.print(byte(text[i]));
+        Serial.println("");
+        draw_character(text[i], new_position);
+        new_position.x = new_position.x + 1;
+    }
+}
