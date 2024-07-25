@@ -8,5 +8,11 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"*.inc": "makefile",
+			"irremote.hpp": "c",
+			"cstddef": "cpp"
+		}
+	}
 }

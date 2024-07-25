@@ -1,0 +1,11 @@
+{
+    "name": "Input",
+    "version": "1.0.0",
+    "description": "Manage receiving input from the player",
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "*",
+    "dependencies": {
+        "z3t0/IRremote": "^4.4.0"
+    }
+}

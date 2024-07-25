@@ -1,0 +1,11 @@
+{
+    "name": "Graphics",
+    "version": "1.0.0",
+    "description": "Manage displaying graphics for the player",
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "*",
+    "dependencies": {
+        "arduino-libraries/LiquidCrystal": "^1.0.7"
+    }
+}
