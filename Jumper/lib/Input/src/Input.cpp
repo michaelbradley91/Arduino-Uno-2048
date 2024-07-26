@@ -9,6 +9,17 @@
 #include <IRremote.hpp>
 
 /**
+ * @brief The number of milliseconds between accepting new
+ *        button presses to avoid accidental repeats
+ */
+#define IR_INPUT_DELAY 400
+
+/**
+ * @brief The simulator does not require any input delay
+ */
+#define WOKWI_INPUT_DELAY 0
+
+/**
  * @brief Statically allocated infrared button names
  */
 const char *IR_BUTTON_NAMES[] = {
@@ -66,7 +77,18 @@ const char *WOKWI_BUTTON_NAMES[] = {
  * We determine this by having a pin only in the simulator on high voltage.
  * Otherwise, the simulation is the same.
  */
-unsigned char is_wokwi = 0;
+byte is_wokwi = 0;
+
+/**
+ * @brief Track if the IR receiver is on
+ */
+byte is_receiver_on = 0;
+
+/**
+ * @brief Flag used to enforce input delay. We ignore the
+ *        wrapping of milliseconds after 50 days
+ */
+unsigned long last_button_press;
 
 /**
  * @brief Initialise the input library
@@ -83,6 +105,7 @@ void init_input(int wokwi_pin, int ir_receive_pin)
         is_wokwi = 1;
     }
     IrReceiver.begin(ir_receive_pin, ENABLE_LED_FEEDBACK);
+    is_receiver_on = 1;
 }
 
 /**
@@ -234,13 +257,24 @@ int is_button_pressed(void)
  */
 int get_raw_button_pressed(void)
 {
-    if (is_button_pressed())
+    unsigned long current_time = millis();
+    if (!is_receiver_on)
+    {
+        unsigned long input_delay = is_wokwi ? WOKWI_INPUT_DELAY : IR_INPUT_DELAY;
+        if (current_time < last_button_press || current_time - last_button_press > input_delay)
+        {
+            IrReceiver.resume();
+            is_receiver_on = 1;
+        }
+    }
+    if (is_receiver_on && is_button_pressed())
     {
         if (IrReceiver.decode())
         {
             IrReceiver.printIRResultShort(&Serial);
             uint16_t command = IrReceiver.decodedIRData.command;
-            IrReceiver.resume();
+            last_button_press = millis();
+            is_receiver_on = 0;
             return (int)command;
         }
     }
@@ -316,5 +350,16 @@ button get_button_pressed()
             return BUTTON_BACK;
         default:
             return BUTTON_UNKNOWN;
+    }
+}
+
+/**
+ * @brief Clear the button press history
+ */
+void clear_button_press_history(void)
+{
+    while(is_button_pressed())
+    {
+        (void)get_button_pressed();
     }
 }
