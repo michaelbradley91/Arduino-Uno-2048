@@ -45,38 +45,50 @@
 #include <Arduino.h>
 #include <Input.hpp>
 #include <Graphics.hpp>
+#include <game_state.h>
+#include <util.h>
 
-// initialize the library by associating any needed LCD interface pin
-// with the arduino pin number it is connected to
+/**
+ * @brief How the LCD display is connected
+ */
 lcd_pins graphics_pins = {
-  register_select: 12,
-  enable: 11,
-  d4: 5,
-  d5: 4,
-  d6: 3,
-  d7: 2
+    register_select : 12,
+    enable : 11,
+    d4 : 5,
+    d5 : 4,
+    d6 : 3,
+    d7 : 2
 };
 
-void setup() {
-  Serial.begin(9600);
+/**
+ * @brief The game state, reset on start up
+ */
+GameState game_state = {};
 
-  init_input(WOKWI_PIN, IR_RECEIVE_PIN);
-  init_graphics(graphics_pins);
+void setup()
+{
+    Serial.begin(9600);
 
-  // Print a message to the LCD.
-  draw_character(LEFT_BORDER, {x: 1, y: 0});
-  draw_character(LEFT_BORDER, {x: 1, y: 1});
-  draw_character(RIGHT_BORDER, {x: 6, y: 0});
-  draw_character(RIGHT_BORDER, {x: 6, y: 1});
-  draw_character(LEFT_BORDER, {x: 9, y: 0});
-  draw_character(LEFT_BORDER, {x: 9, y: 1});
-  draw_character(RIGHT_BORDER, {x: 14, y: 0});
-  draw_character(RIGHT_BORDER, {x: 14, y: 1});
-  draw_character(RIGHT_ARROW, {x: 7, y: 1});
-  draw_character(RIGHT_ARROW, {x: 8, y: 0});
+    init_input(WOKWI_PIN, IR_RECEIVE_PIN);
+    init_graphics(graphics_pins);
+    reset_game_state(&game_state);
+
+    // Print a message to the LCD.
+    // draw_character(LEFT_BORDER, {x : 1, y : 0});
+    // draw_character(LEFT_BORDER, {x : 1, y : 1});
+    // draw_character(RIGHT_BORDER, {x : 6, y : 0});
+    // draw_character(RIGHT_BORDER, {x : 6, y : 1});
+    // draw_character(LEFT_BORDER, {x : 9, y : 0});
+    // draw_character(LEFT_BORDER, {x : 9, y : 1});
+    // draw_character(RIGHT_BORDER, {x : 14, y : 0});
+    // draw_character(RIGHT_BORDER, {x : 14, y : 1});
+    // draw_character(RIGHT_ARROW, {x : 7, y : 1});
+    // draw_character(RIGHT_ARROW, {x : 8, y : 0});
 }
 
 int times = 0;
 
-void loop() {
+void loop()
+{
+
 }
