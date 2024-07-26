@@ -65,6 +65,14 @@ lcd_pins graphics_pins = {
  */
 GameState game_state = {};
 
+/**
+ * @brief Whether or not the game is powered on
+ */
+byte powered = 1;
+
+/**
+ * @brief Initialise the game
+ */
 void setup()
 {
     Serial.begin(9600);
@@ -72,6 +80,7 @@ void setup()
     init_input(WOKWI_PIN, IR_RECEIVE_PIN);
     init_graphics(graphics_pins);
     reset_game_state(&game_state);
+    update_scene(&game_state, SCENE_START);
 
     // Print a message to the LCD.
     // draw_character(LEFT_BORDER, {x : 1, y : 0});
@@ -86,9 +95,41 @@ void setup()
     // draw_character(RIGHT_ARROW, {x : 8, y : 0});
 }
 
-int times = 0;
-
+/**
+ * @brief Run as fast as possible.
+ */
 void loop()
 {
+    /* Look for an input button */
+    button button_pressed = get_button_pressed();
 
+    if (button_pressed == BUTTON_POWER)
+    {
+        if (powered)
+        {
+            Serial.println("Powering down");
+            turn_off_screen();
+            powered = 0;
+            return;
+        }
+        Serial.println("Powering up!");
+        reset_screen();
+        turn_on_screen();
+        reset_game_state(&game_state);        
+        powered = 1;
+    }
+
+    /* If we're not powered, we can ignore all other buttons */
+    if (!powered) return;
+
+    /* Update the scene if needed */
+    if (button_pressed != BUTTON_UNKNOWN &&
+        button_pressed != BUTTON_NONE &&
+        button_pressed != BUTTON_POWER)
+    {
+        game_state.updater(&game_state, button_pressed);
+    }
+
+    /* Render the scene */
+    game_state.renderer(&game_state);
 }

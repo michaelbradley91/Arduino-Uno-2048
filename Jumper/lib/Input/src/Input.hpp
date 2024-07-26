@@ -27,7 +27,7 @@ typedef enum
     IR_BUTTON_FUNC_STOP = 71,
     IR_BUTTON_PLAY_PAUSE = 64,
     IR_BUTTON_UNKNOWN = -1
-} IR_BUTTON;
+} ir_button;
 
 /**
  * @brief The raw buttons received from the Wokwi remote controller
@@ -55,7 +55,7 @@ typedef enum
     WOKWI_BUTTON_EIGHT = 0x4A,
     WOKWI_BUTTON_NINE = 0x52,
     WOKWI_BUTTON_UNKNOWN = -1
-} WOKWI_BUTTON;
+} wokwi_button;
 
 /**
  * @brief A logical game button.
@@ -72,13 +72,13 @@ typedef enum
     BUTTON_POWER,
     BUTTON_BACK,
     BUTTON_ENTER,
-    BUTTON_UNKNOWN,
-    BUTTON_NONE
-} BUTTON;
+    BUTTON_UNKNOWN = -1,
+    BUTTON_NONE = -2
+} button;
 
 void
 init_input(int wokwi_pin, int ir_receive_pin);
 const char *raw_button_to_str(int button);
 int get_raw_button_pressed(void);
 int is_button_pressed(void);
-BUTTON get_button_pressed(void);
+button get_button_pressed(void);

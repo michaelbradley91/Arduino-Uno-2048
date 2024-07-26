@@ -55,6 +55,31 @@ void init_graphics(lcd_pins pins)
 }
 
 /**
+ * @brief Turn off the LCD screen. Does not clear the screen
+ */
+void turn_off_screen(void)
+{
+    Serial.println("Turning screen off");
+    lcd.noDisplay();
+}
+
+/**
+ * @brief Turn the LCD screen back on, with whatever characters were there before
+ */
+void turn_on_screen(void)
+{
+    lcd.display();
+}
+
+/**
+ * @brief Reset the LCD screen entirely, wiping all characters
+ */
+void reset_screen(void)
+{
+    lcd.clear();
+}
+
+/**
  * @brief Draw a single character to the screen
  * 
  * @param character - the character to draw

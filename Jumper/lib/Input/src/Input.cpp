@@ -10,6 +10,9 @@
 
 #define IR_RECEIVE_PIN 7
 
+/**
+ * @brief Statically allocated infrared button names
+ */
 const char *IR_BUTTON_NAMES[] = {
     "One",
     "Two",
@@ -34,6 +37,9 @@ const char *IR_BUTTON_NAMES[] = {
     "Play/Pause",
     "Unknown"};
 
+/**
+ * @brief Statically allocated Wokwi button names
+ */
 const char *WOKWI_BUTTON_NAMES[] = {
     "Power",
     "Test",
@@ -57,6 +63,11 @@ const char *WOKWI_BUTTON_NAMES[] = {
     "Nine",
     "Unknown"};
 
+/**
+ * @brief Flag used to track if we are inside the Wokwi simulator
+ * We determine this by having a pin only in the simulator on high voltage.
+ * Otherwise, the simulation is the same.
+ */
 unsigned char is_wokwi = 0;
 
 /**
@@ -76,7 +87,14 @@ void init_input(int wokwi_pin, int ir_receive_pin)
     IrReceiver.begin(ir_receive_pin, ENABLE_LED_FEEDBACK);
 }
 
-static const char *ir_button_to_str(IR_BUTTON button)
+/**
+ * @brief Get a string representation of an infrared button.
+ *        That is, one from the IR remote control.
+ * 
+ * @param button - the infrared button pressed
+ * @return - a string representation. Does not need to be freed
+ */
+static const char *ir_button_to_str(ir_button button)
 {
     switch (button)
     {
@@ -127,7 +145,13 @@ static const char *ir_button_to_str(IR_BUTTON button)
     }
 }
 
-static const char *wokwi_button_to_str(WOKWI_BUTTON button)
+/**
+ * @brief Get a string representation of a Wokwi button
+ * 
+ * @param button - the Wokwi button pressed
+ * @return - a string representation. Does not need to be freed
+ */
+static const char *wokwi_button_to_str(wokwi_button button)
 {
     switch (button)
     {
@@ -186,9 +210,9 @@ const char *raw_button_to_str(int button)
 {
     if (is_wokwi)
     {
-        return wokwi_button_to_str((WOKWI_BUTTON)button);
+        return wokwi_button_to_str((wokwi_button)button);
     }
-    return ir_button_to_str((IR_BUTTON)button);
+    return ir_button_to_str((ir_button)button);
 }
 
 /**
@@ -229,9 +253,9 @@ int get_raw_button_pressed(void)
 /**
  * @brief Get the button pressed at the moment, if any
  *
- * @return BUTTON - the game play button that was pressed
+ * @return button - the game play button that was pressed
  */
-BUTTON get_button_pressed()
+button get_button_pressed()
 {
     if (!is_button_pressed())
     {

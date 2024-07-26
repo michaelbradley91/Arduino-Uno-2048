@@ -12,7 +12,8 @@
 		"files.associations": {
 			"*.inc": "makefile",
 			"irremote.hpp": "c",
-			"cstddef": "cpp"
+			"cstddef": "cpp",
+			"game_state.h": "c"
 		}
 	}
 }

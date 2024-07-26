@@ -69,6 +69,9 @@ typedef struct
 } position;
 
 void init_graphics(lcd_pins pins);
+void turn_off_screen(void);
+void turn_on_screen(void);
+void reset_screen(void);
 void draw_character(const char character, position position);
 void draw_number(int number, position position);
 void draw_text(const char *text, position start_position);
