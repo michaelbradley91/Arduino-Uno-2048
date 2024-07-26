@@ -23,9 +23,9 @@ static const char* get_lose_score(GameState *game_state)
     {
         for (int y = 0; y < 4; y++)
         {
-            if (game_state->grid.values[x][y] > max_number)
+            if (game_state->grid.cells[x][y] > max_number)
             {
-                max_number = game_state->grid.values[x][y];
+                max_number = game_state->grid.cells[x][y];
             }
         }
     }

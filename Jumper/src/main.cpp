@@ -53,18 +53,6 @@ void setup()
     init_graphics(graphics_pins);
     reset_game_state(&game_state);
     update_scene(&game_state, SCENE_START);
-
-    // Print a message to the LCD.
-    // draw_character(LEFT_BORDER, {x : 1, y : 0});
-    // draw_character(LEFT_BORDER, {x : 1, y : 1});
-    // draw_character(RIGHT_BORDER, {x : 6, y : 0});
-    // draw_character(RIGHT_BORDER, {x : 6, y : 1});
-    // draw_character(LEFT_BORDER, {x : 9, y : 0});
-    // draw_character(LEFT_BORDER, {x : 9, y : 1});
-    // draw_character(RIGHT_BORDER, {x : 14, y : 0});
-    // draw_character(RIGHT_BORDER, {x : 14, y : 1});
-    // draw_character(RIGHT_ARROW, {x : 7, y : 1});
-    // draw_character(RIGHT_ARROW, {x : 8, y : 0});
 }
 
 /**

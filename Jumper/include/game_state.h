@@ -15,11 +15,11 @@ typedef enum
 } Scene;
 
 /**
- * @brief The grid holding the numbers in 2048
+ * @brief The grid holding the numbers in 2048. A value of zero means blank
  */
 typedef struct
 {
-    int values[4][4];
+    int cells[4][4];
 } Grid;
 
 typedef struct GameState_s GameState;

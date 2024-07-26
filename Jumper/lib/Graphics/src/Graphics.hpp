@@ -99,6 +99,7 @@ void use_play_characters(void);
 void use_win_characters(void);
 void use_lose_characters(void);
 void draw_character(const char character, position position);
+char get_number_character(int number);
 void draw_number(int number, position position);
 void draw_bytes(const char *text, position start_position, size_t length);
 void draw_text(const char *text, position start_position);
