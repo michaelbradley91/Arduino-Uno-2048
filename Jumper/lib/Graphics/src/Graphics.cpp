@@ -7,14 +7,18 @@
 /**
  * @brief Custom characters
  */
-byte left_border[]  = { B00110, B00110, B00110, B00110, B00110, B00110, B00110, B00110 };
-byte right_border[] = { B01100, B01100, B01100, B01100, B01100, B01100, B01100, B01100 };
-byte num_16[]       = { B11111, B10001, B10001, B10001, B10001, B10001, B10001, B11111 };
-byte num_32[]       = { B11111, B10001, B10001, B10001, B10001, B10001, B11111, B11111 };
-byte num_64[]       = { B11111, B10001, B10001, B10001, B10001, B11111, B11111, B11111 };
-byte num_128[]      = { B11111, B10001, B10001, B10001, B11111, B11111, B11111, B11111 };
-byte num_256[]      = { B11111, B10001, B10001, B11111, B11111, B11111, B11111, B11111 };
-byte num_512[]      = { B11111, B10001, B11111, B11111, B11111, B11111, B11111, B11111 };
+byte left_border[]         = { B00110, B00110, B00110, B00110, B00110, B00110, B00110, B00110 };
+byte right_border[]        = { B01100, B01100, B01100, B01100, B01100, B01100, B01100, B01100 };
+byte num_16[]              = { B11111, B10001, B10001, B10001, B10001, B10001, B10001, B11111 };
+byte num_32[]              = { B11111, B10001, B10001, B10001, B10001, B10001, B11111, B11111 };
+byte num_64[]              = { B11111, B10001, B10001, B10001, B10001, B11111, B11111, B11111 };
+byte num_128[]             = { B11111, B10001, B10001, B10001, B11111, B11111, B11111, B11111 };
+byte num_256[]             = { B11111, B10001, B10001, B11111, B11111, B11111, B11111, B11111 };
+byte num_512[]             = { B11111, B10001, B11111, B11111, B11111, B11111, B11111, B11111 };
+byte trophy_top_left[] = { B00000, B00000, B00011, B00111, B11111, B10111, B10111, B01111 };
+byte trophy_top_right[] = { B00000, B00000, B11000, B11100, B11111, B11101, B11101, B11110 };
+byte trophy_bottom_left[] = { B00111, B00011, B00001, B00001, B00001, B00111, B11111, B00000 };
+byte trophy_bottom_right[] = { B11100, B11000, B10000, B10000, B10000, B11100, B11111, B00000 };
 
 /**
  * @brief The liquid crystal display itself
@@ -35,6 +39,15 @@ void init_graphics(lcd_pins pins)
 {
     lcd = LiquidCrystal(pins.register_select, pins.enable, pins.d4, pins.d5, pins.d6, pins.d7);
     lcd.begin(LCD_WIDTH, LCD_HEIGHT);
+    reset_screen();
+}
+
+/**
+ * @brief Use the play character set. This supports extra "numbers"
+ *        to reach 2048
+ */
+void use_play_characters(void)
+{
     lcd.createChar(LEFT_BORDER, left_border);
     lcd.createChar(RIGHT_BORDER, right_border);
     lcd.createChar(NUM_16, num_16);
@@ -43,15 +56,17 @@ void init_graphics(lcd_pins pins)
     lcd.createChar(NUM_128, num_128);
     lcd.createChar(NUM_256, num_256);
     lcd.createChar(NUM_512, num_512);
-    lcd.clear();
+}
 
-    for (int x = 0; x < LCD_WIDTH; x++)
-    {
-        for (int y = 0; y < LCD_HEIGHT; y++)
-        {
-            state.grid[x][y] = CELL_CLEAR;
-        }
-    }
+/**
+ * @brief Use the "win" character set to make the player feel amazing!
+ */
+void use_win_characters(void)
+{
+    lcd.createChar(TROPHY_TOP_LEFT, trophy_top_left);
+    lcd.createChar(TROPHY_TOP_RIGHT, trophy_top_right);
+    lcd.createChar(TROPHY_BOTTOM_LEFT, trophy_bottom_left);
+    lcd.createChar(TROPHY_BOTTOM_RIGHT, trophy_bottom_right);
 }
 
 /**
@@ -77,6 +92,13 @@ void turn_on_screen(void)
 void reset_screen(void)
 {
     lcd.clear();
+    for (int x = 0; x < LCD_WIDTH; x++)
+    {
+        for (int y = 0; y < LCD_HEIGHT; y++)
+        {
+            state.grid[x][y] = CELL_CLEAR;
+        }
+    }
 }
 
 /**
@@ -140,6 +162,24 @@ void draw_number(int number, position position)
 }
 
 /**
+ * @brief Draw bytes starting at the given position
+ *        Similar to draw_text but not stopped by a null byte
+ * 
+ * @param text - the text to draw
+ * @param start_position - where to start drawing
+ * @param length - how many bytes to read
+ */
+void draw_bytes(const char *text, position start_position, size_t length)
+{
+    position new_position = start_position;
+    for (unsigned int i = 0; i < length; i++)
+    {
+        draw_character(text[i], new_position);
+        new_position.x = new_position.x + 1;
+    }
+}
+
+/**
  * @brief Draw text starting at the given position
  * 
  * @param text - the text to draw
@@ -147,10 +187,5 @@ void draw_number(int number, position position)
  */
 void draw_text(const char *text, position start_position)
 {
-    position new_position = start_position;
-    for (unsigned int i = 0; i < strlen(text); i++)
-    {
-        draw_character(text[i], new_position);
-        new_position.x = new_position.x + 1;
-    }
+    draw_bytes(text, start_position, strlen(text));
 }

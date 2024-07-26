@@ -304,7 +304,7 @@ button get_button_pressed()
             case WOKWI_BUTTON_POWER:
                 return BUTTON_POWER;
             case WOKWI_BUTTON_MENU:
-                return BUTTON_BACK;
+            case WOKWI_BUTTON_RETURN:
                 return BUTTON_BACK;
             case WOKWI_BUTTON_PLUS:
             case WOKWI_BUTTON_TWO:

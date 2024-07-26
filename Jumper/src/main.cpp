@@ -95,8 +95,7 @@ void loop()
     if (!powered) return;
 
     /* Update the scene if needed */
-    if (button_pressed != BUTTON_UNKNOWN &&
-        button_pressed != BUTTON_NONE &&
+    if (button_pressed != BUTTON_NONE &&
         button_pressed != BUTTON_POWER)
     {
         game_state.updater(&game_state, button_pressed);

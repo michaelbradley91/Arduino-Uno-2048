@@ -34,5 +34,5 @@ void render_start_scene(GameState *game_state)
  */
 void update_start_scene(GameState *game_state, button button_pressed)
 {
-    update_scene(game_state, SCENE_PLAY);
+    update_scene(game_state, SCENE_WIN);
 }
