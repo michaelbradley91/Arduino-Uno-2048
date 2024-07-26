@@ -268,6 +268,16 @@ int is_won(Grid *grid)
  */
 void update_play_scene(GameState *game_state, button button_pressed)
 {
+    /* 
+     * To the let the player realise they have lost, we let them see
+     * the final position
+     */
+    if (is_lost(&game_state->grid))
+    {
+        update_scene(game_state, SCENE_LOSE);
+        return;
+    }
+
     int delta_x = 0;
     int delta_y = 0;
     switch(button_pressed)
@@ -293,11 +303,15 @@ void update_play_scene(GameState *game_state, button button_pressed)
 
     /*
      * Update the grid by sliding and combining numbers.
-     * Note that combining is only done once
+     * Note that combining is only done once.
      */
+    Grid grid_copy = game_state->grid;
     slide(&game_state->grid, delta_x, delta_y);
     combine(&game_state->grid, delta_x, delta_y);
     slide(&game_state->grid, delta_x, delta_y);
+
+    /* Did anything change? If not, the move is ignored */
+    if (memcmp(&grid_copy, &game_state->grid, sizeof(Grid)) == 0) return;
 
     /* Add a new number if possible */
     add_random_number_to_grid(&game_state->grid);
@@ -309,13 +323,6 @@ void update_play_scene(GameState *game_state, button button_pressed)
     if (is_won(&game_state->grid))
     {
         update_scene(game_state, SCENE_WIN);
-        return;
-    }
-
-    /* Check if the player is lost... */
-    if (is_lost(&game_state->grid))
-    {
-        update_scene(game_state, SCENE_LOSE);
         return;
     }
 }
