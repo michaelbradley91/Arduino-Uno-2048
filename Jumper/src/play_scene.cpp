@@ -1,4 +1,5 @@
 #include <Graphics.hpp>
+#include <Arduino.h>
 #include <random.h>
 #include <util.h>
 #include <play_scene.h>
@@ -79,6 +80,187 @@ void render_play_scene(GameState *game_state)
 }
 
 /**
+ * @brief Slide all cells as far as they will go
+ *        without combining anything
+ * 
+ * @param grid - the grid to modify
+ * @param delta_x - the slide direction in x
+ * @param delta_y - the slide direction in y
+ */
+static void slide(Grid *grid, int delta_x, int delta_y)
+{
+    /*
+     * Calculate the boundaries of cells
+     * and their neighbours for sliding
+     */
+    int small_x = max(0, -delta_x);
+    int small_y = max(0, -delta_y);
+    int big_x = min(3, 3 - delta_x);
+    int big_y = min(3, 3 - delta_y);
+
+    /*
+     * We can only slide cells so many times...
+     * This is really inefficient but works
+     */
+    int has_changed = 0;
+    while(1)
+    {
+        for (int x = small_x; x <= big_x; x++)
+        {
+            for (int y = small_y; y <= big_y; y++)
+            {
+                /* Is our neighbour free? */
+                if (grid->cells[x][y] > 0 && grid->cells[x + delta_x][y + delta_y] == 0)
+                {
+                    grid->cells[x + delta_x][y + delta_y] = grid->cells[x][y];
+                    grid->cells[x][y] = 0;
+                    has_changed = 1;
+                }
+            }
+        }
+        if (!has_changed)
+        {
+            return;
+        }
+        has_changed = 0;
+    }
+}
+
+/**
+ * @brief Combine any pair of cells on the grid in the direction
+ *        of the slide. This always combines into the slide direction
+ * 
+ * @param grid - the grid to modify
+ * @param delta_x - the slide direction in x
+ * @param delta_y - the slide direction in y
+ */
+static void combine(Grid *grid, int delta_x, int delta_y)
+{
+    /*
+     * This could definitely be smarter, but we just brute force
+     * the slide directions
+     */
+    if (delta_x > 0)
+    {
+        for (int x = 2; x >= 0; x--)
+        {
+            for (int y = 0; y < 4; y++)
+            {
+                if (grid->cells[x][y] == grid->cells[x + delta_x][y + delta_y])
+                {
+                    grid->cells[x + delta_x][y + delta_y] *= 2;
+                    grid->cells[x][y] = 0;
+                }
+            }
+        }
+    }
+    else if (delta_x < 0)
+    {
+        for (int x = 1; x < 4; x++)
+        {
+            for (int y = 0; y < 4; y++)
+            {
+                if (grid->cells[x][y] == grid->cells[x + delta_x][y + delta_y])
+                {
+                    grid->cells[x + delta_x][y + delta_y] *= 2;
+                    grid->cells[x][y] = 0;
+                }
+            }
+        }
+    }
+    else if (delta_y > 0)
+    {
+        for (int x = 0; x < 4; x++)
+        {
+            for (int y = 2; y >= 0; y--)
+            {
+                if (grid->cells[x][y] == grid->cells[x + delta_x][y + delta_y])
+                {
+                    grid->cells[x + delta_x][y + delta_y] *= 2;
+                    grid->cells[x][y] = 0;
+                }
+            }
+        }
+    }
+    else  /* delta_y < 0 */
+    {
+        for (int x = 0; x < 4; x++)
+        {
+            for (int y = 1; y < 4; y++)
+            {
+                if (grid->cells[x][y] == grid->cells[x + delta_x][y + delta_y])
+                {
+                    grid->cells[x + delta_x][y + delta_y] *= 2;
+                    grid->cells[x][y] = 0;
+                }
+            }
+        }
+    }
+}
+
+/**
+ * @brief Check if the current grid position is lost
+ * 
+ * The game is lost when there is no way to slide or combine numbers.
+ * 
+ * @param grid - the grid to check
+ * @return - 1 if the game is lost, and 0 otherwise.
+ */
+int is_lost(Grid *grid)
+{
+    for (int x = 0; x < 4; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            /* Any free cell means we can slide */
+            if (grid->cells[x][y] == 0)
+            {
+                return 0;
+            }
+            /* Can we combine this with anything? */
+            if (x - 1 >= 0 && grid->cells[x - 1][y] == grid->cells[x][y])
+            {
+                return 0;
+            }
+            if (x + 1 < 4 && grid->cells[x + 1][y] == grid->cells[x][y])
+            {
+                return 0;
+            }
+            if (y - 1 >= 0 && grid->cells[x][y - 1] == grid->cells[x][y])
+            {
+                return 0;
+            }
+            if (y + 1 < 4 && grid->cells[x][y + 1] == grid->cells[x][y])
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+/**
+ * @brief Check if the grid is won - does it have a 2048?
+ * 
+ * @param grid - the grid to check
+ * @return - 1 if the game is won, and 0 otherwise
+ */
+int is_won(Grid *grid)
+{
+    for (int x = 0; x < 4; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            if (grid->cells[x][y] == 2048)
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+/**
  * @brief Update this scene with the given button press
  * 
  * @param game_state - the current state of the game
@@ -86,5 +268,54 @@ void render_play_scene(GameState *game_state)
  */
 void update_play_scene(GameState *game_state, button button_pressed)
 {
-    
+    int delta_x = 0;
+    int delta_y = 0;
+    switch(button_pressed)
+    {
+        case BUTTON_LEFT:
+            delta_x = -1;
+            break;
+        case BUTTON_RIGHT:
+            delta_x = 1;
+            break;
+        case BUTTON_DOWN:
+            delta_y = 1;
+            break;
+        case BUTTON_UP:
+            delta_y = -1;
+            break;
+        case BUTTON_BACK:
+            update_scene(game_state, SCENE_START);
+            return;
+        default:
+            return;
+    }
+
+    /*
+     * Update the grid by sliding and combining numbers.
+     * Note that combining is only done once
+     */
+    slide(&game_state->grid, delta_x, delta_y);
+    combine(&game_state->grid, delta_x, delta_y);
+    slide(&game_state->grid, delta_x, delta_y);
+
+    /* Add a new number if possible */
+    add_random_number_to_grid(&game_state->grid);
+
+    /* 
+     * Check if the player won (you can reach an unmovable position
+     * after winning)
+     */
+    if (is_won(&game_state->grid))
+    {
+        update_scene(game_state, SCENE_WIN);
+        return;
+    }
+
+    /* Check if the player is lost... */
+    if (is_lost(&game_state->grid))
+    {
+        update_scene(game_state, SCENE_LOSE);
+        return;
+    }
 }
