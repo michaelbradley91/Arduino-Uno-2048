@@ -8,8 +8,6 @@
 #include <Arduino.h>
 #include <IRremote.hpp>
 
-#define IR_RECEIVE_PIN 7
-
 /**
  * @brief Statically allocated infrared button names
  */
@@ -242,7 +240,6 @@ int get_raw_button_pressed(void)
         {
             IrReceiver.printIRResultShort(&Serial);
             uint16_t command = IrReceiver.decodedIRData.command;
-            delay(100); // wait a bit
             IrReceiver.resume();
             return (int)command;
         }

@@ -1,52 +1,24 @@
-/*
-  LiquidCrystal Library - Hello World
-
- Demonstrates the use a 16x2 LCD display.  The LiquidCrystal
- library works with all LCD displays that are compatible with the
- Hitachi HD44780 driver. There are many of them out there, and you
- can usually tell them by the 16-pin interface.
-
- This sketch prints "Hello World!" to the LCD
- and shows the time.
-
-  The circuit:
- * LCD RS pin to digital pin 12
- * LCD Enable pin to digital pin 11
- * LCD D4 pin to digital pin 5
- * LCD D5 pin to digital pin 4
- * LCD D6 pin to digital pin 3
- * LCD D7 pin to digital pin 2
- * LCD R/W pin to ground
- * LCD VSS pin to ground
- * LCD VCC pin to 5V
- * 10K resistor:
- * ends to +5V and ground
- * wiper to LCD VO pin (pin 3)
-
- Library originally added 18 Apr 2008
- by David A. Mellis
- library modified 5 Jul 2009
- by Limor Fried (http://www.ladyada.net)
- example added 9 Jul 2009
- by Tom Igoe
- modified 22 Nov 2010
- by Tom Igoe
- modified 7 Nov 2016
- by Arturo Guadalupi
-
- This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/LiquidCrystalHelloWorld
-
-*/
-#define IR_RECEIVE_PIN 7
-#define WOKWI_PIN 13
-
 #include <Arduino.h>
 #include <Input.hpp>
 #include <Graphics.hpp>
 #include <game_state.h>
 #include <util.h>
+
+/**
+ * @brief Where the infrared receiver is getting its input
+ */
+#define IR_RECEIVE_PIN 7
+
+/**
+ * @brief Pin to identify if we are in the Wokwi simulator
+ */
+#define WOKWI_PIN 13
+
+/**
+ * @brief The delay beyween reading Infrared inputs. Avoids
+ *        accidental double button presses.
+ */
+#define INPUT_DELAY_MILLISECONDS 1000
 
 /**
  * @brief How the LCD display is connected

@@ -150,13 +150,6 @@ void draw_text(const char *text, position start_position)
     position new_position = start_position;
     for (unsigned int i = 0; i < strlen(text); i++)
     {
-        Serial.println("Drawing character at position: ");
-        Serial.print(new_position.x);
-        Serial.print(", ");
-        Serial.print(new_position.y);
-        Serial.print(", ");
-        Serial.print(byte(text[i]));
-        Serial.println("");
         draw_character(text[i], new_position);
         new_position.x = new_position.x + 1;
     }
