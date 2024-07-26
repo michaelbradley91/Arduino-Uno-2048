@@ -11,7 +11,7 @@ void init_start_scene(GameState *game_state)
 {
     /* Draw the welcome message */
     
-    draw_text("Let's play 2048!", {x: 0, y: 0});
+    draw_text("Let's Play 2048!", {x: 0, y: 0});
     draw_text(NUM_1024_STR "+" NUM_1024_STR "=2048 <Start>", {x: 0, y: 1});
 }
 
@@ -34,5 +34,5 @@ void render_start_scene(GameState *game_state)
  */
 void update_start_scene(GameState *game_state, button button_pressed)
 {
-    update_scene(game_state, SCENE_WIN);
+    update_scene(game_state, SCENE_LOSE);
 }

@@ -24,6 +24,10 @@
 #define TROPHY_TOP_RIGHT    '\x01'
 #define TROPHY_BOTTOM_LEFT  '\x02'
 #define TROPHY_BOTTOM_RIGHT '\x03'
+#define SAD_TOP_LEFT        '\x00'
+#define SAD_TOP_RIGHT       '\x01'
+#define SAD_BOTTOM_LEFT     '\x02'
+#define SAD_BOTTOM_RIGHT    '\x03'
 #define RIGHT_ARROW         '\x7e'
 #define CELL_CLEAR          '\xfe'
 #define CELL_BLOCK          '\xff'
@@ -44,12 +48,18 @@
 #define TROPHY_TOP_RIGHT_STR    "\x01"
 #define TROPHY_BOTTOM_LEFT_STR  "\x02"
 #define TROPHY_BOTTOM_RIGHT_STR "\x03"
+#define SAD_TOP_LEFT_STR        "\x00"
+#define SAD_TOP_RIGHT_STR       "\x01"
+#define SAD_BOTTOM_LEFT_STR     "\x02"
+#define SAD_BOTTOM_RIGHT_STR    "\x03"
 #define RIGHT_ARROW_STR         "\x7e"
 #define CELL_CLEAR_STR          "\xfe"
 #define CELL_BLOCK_STR          "\xff"
 #define NUM_1024_STR            "\xff"
 #define TROPHY_TOP_STR          TROPHY_TOP_LEFT_STR TROPHY_TOP_RIGHT_STR
 #define TROPHY_BOTTOM_STR       TROPHY_BOTTOM_LEFT_STR TROPHY_BOTTOM_RIGHT_STR
+#define SAD_TOP_STR             SAD_TOP_LEFT_STR SAD_TOP_RIGHT_STR
+#define SAD_BOTTOM_STR          SAD_BOTTOM_LEFT_STR SAD_BOTTOM_RIGHT_STR
 
 /**
  * @brief Type for passing the pin information to the graphics library
@@ -87,6 +97,7 @@ void turn_on_screen(void);
 void reset_screen(void);
 void use_play_characters(void);
 void use_win_characters(void);
+void use_lose_characters(void);
 void draw_character(const char character, position position);
 void draw_number(int number, position position);
 void draw_bytes(const char *text, position start_position, size_t length);

@@ -11,7 +11,7 @@ void init_win_scene(GameState *game_state)
 {
     use_win_characters();
     draw_bytes(" " TROPHY_TOP_STR "  [2048]  " TROPHY_TOP_STR " ", {x: 0, y: 0}, 16);
-    draw_text(" " TROPHY_BOTTOM_STR " You win! " TROPHY_BOTTOM_STR " ", {x: 0, y: 1});
+    draw_text(" " TROPHY_BOTTOM_STR " You Win! " TROPHY_BOTTOM_STR " ", {x: 0, y: 1});
 }
 
 /**

@@ -19,6 +19,10 @@ byte trophy_top_left[] = { B00000, B00000, B00011, B00111, B11111, B10111, B1011
 byte trophy_top_right[] = { B00000, B00000, B11000, B11100, B11111, B11101, B11101, B11110 };
 byte trophy_bottom_left[] = { B00111, B00011, B00001, B00001, B00001, B00111, B11111, B00000 };
 byte trophy_bottom_right[] = { B11100, B11000, B10000, B10000, B10000, B11100, B11111, B00000 };
+byte sad_top_left[] = { B00000, B00000, B00000, B00011, B00100, B01000, B10010, B10000 };
+byte sad_top_right[] = { B00000, B00000, B00000, B11000, B00100, B00010, B01001, B00001 };
+byte sad_bottom_left[] = { B10000, B10001, B01010, B00100, B00011, B00000, B00000, B00000 };
+byte sad_bottom_right[] = { B00001, B10001, B01010, B00100, B11000, B00000, B00000, B00000 };
 
 /**
  * @brief The liquid crystal display itself
@@ -67,6 +71,17 @@ void use_win_characters(void)
     lcd.createChar(TROPHY_TOP_RIGHT, trophy_top_right);
     lcd.createChar(TROPHY_BOTTOM_LEFT, trophy_bottom_left);
     lcd.createChar(TROPHY_BOTTOM_RIGHT, trophy_bottom_right);
+}
+
+/**
+ * @brief Use the "lose" character set to express that tragic loss!
+ */
+void use_lose_characters(void)
+{
+    lcd.createChar(SAD_TOP_LEFT, sad_top_left);
+    lcd.createChar(SAD_TOP_RIGHT, sad_top_right);
+    lcd.createChar(SAD_BOTTOM_LEFT, sad_bottom_left);
+    lcd.createChar(SAD_BOTTOM_RIGHT, sad_bottom_right);
 }
 
 /**
