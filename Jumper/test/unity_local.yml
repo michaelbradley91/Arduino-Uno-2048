@@ -1,0 +1,11 @@
+:unity:
+  :includes:
+    - stdio.h
+  :cexception: true
+  :enforce_string_ordering: true
+  :externc:
+  :mock_prefix: ''
+  :mock_suffix: 'Fake'
+  :plugins:
+    - :cexception
+  :use_param_tests: true

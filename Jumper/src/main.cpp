@@ -3,7 +3,6 @@
 #include <Graphics.hpp>
 #include <game_state.h>
 #include <util.h>
-#include <calculator.h>
 #include <pins.h>
 
 /**
