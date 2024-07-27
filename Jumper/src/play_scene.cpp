@@ -5,7 +5,20 @@
 #include <play_scene.h>
 
 /**
+ * @brief Workaround as unity's cmock generator does not handle structs well...
+ * 
+ * @param character - the character to draw
+ * @param pos - where to draw the character
+ */
+static void draw_character_at(char character, position pos)
+{
+    position character_position = pos;
+    draw_character(character, &character_position);
+}
+
+/**
  * @brief Initialise this scene
+ * 
  * 
  * @param game_state - the current state of the game
  */
@@ -18,16 +31,16 @@ void init_play_scene(GameState *game_state)
     memset(&game_state->grid, 0, sizeof(game_state->grid));
 
     /* Draw the surrounding boxes */
-    draw_character(LEFT_BORDER, {x : 1, y : 0});
-    draw_character(LEFT_BORDER, {x : 1, y : 1});
-    draw_character(RIGHT_BORDER, {x : 6, y : 0});
-    draw_character(RIGHT_BORDER, {x : 6, y : 1});
-    draw_character(LEFT_BORDER, {x : 9, y : 0});
-    draw_character(LEFT_BORDER, {x : 9, y : 1});
-    draw_character(RIGHT_BORDER, {x : 14, y : 0});
-    draw_character(RIGHT_BORDER, {x : 14, y : 1});
-    draw_character(RIGHT_ARROW, {x : 7, y : 1});
-    draw_character(RIGHT_ARROW, {x : 8, y : 0});
+    draw_character_at(LEFT_BORDER, {x: 1, y: 0});
+    draw_character_at(LEFT_BORDER, {x : 1, y : 1});
+    draw_character_at(RIGHT_BORDER, {x : 6, y : 0});
+    draw_character_at(RIGHT_BORDER, {x : 6, y : 1});
+    draw_character_at(LEFT_BORDER, {x : 9, y : 0});
+    draw_character_at(LEFT_BORDER, {x : 9, y : 1});
+    draw_character_at(RIGHT_BORDER, {x : 14, y : 0});
+    draw_character_at(RIGHT_BORDER, {x : 14, y : 1});
+    draw_character_at(RIGHT_ARROW, {x : 7, y : 1});
+    draw_character_at(RIGHT_ARROW, {x : 8, y : 0});
 
     /* Start by adding two random numbers */
     add_random_number_to_grid(&game_state->grid);
@@ -41,7 +54,7 @@ void init_play_scene(GameState *game_state)
  * @param y - the y position of the cell
  * @return position - the position of the cell on the LCD screen
  */
-static position get_position_for_cell(int x, int y)
+STATIC position get_position_for_cell(int x, int y)
 {
     /* Top half */
     if (y < 2)
@@ -73,7 +86,7 @@ void render_play_scene(GameState *game_state)
             int cell_value = game_state->grid.cells[x][y];
             if (get_number_character(cell_value) != screen_character)
             {
-                draw_number(cell_value, graphics_position);
+                draw_number(cell_value, &graphics_position);
             }
         }
     }

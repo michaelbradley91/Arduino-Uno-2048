@@ -65,10 +65,14 @@ void init_lose_scene(GameState *game_state)
 {
     use_lose_characters();
     const char *lost_score = get_lose_score(game_state);
-    draw_bytes(" " SAD_TOP_STR "  ", {x: 0, y: 0}, 5);
-    draw_text(lost_score, {x: 5, y: 0});
-    draw_bytes("  " SAD_TOP_STR " ", {x: 11, y: 0}, 5);
-    draw_text(" " SAD_BOTTOM_STR " You Lost " SAD_BOTTOM_STR " ", {x: 0, y: 1});
+    position pos = {x: 0, y: 0};
+    draw_bytes(" " SAD_TOP_STR "  ", &pos, 5);
+    pos = {x: 5, y: 0};
+    draw_text(lost_score, &pos);
+    pos = {x: 11, y: 0};
+    draw_bytes("  " SAD_TOP_STR " ", &pos, 5);
+    pos = {x: 0, y: 1};
+    draw_text(" " SAD_BOTTOM_STR " You Lost " SAD_BOTTOM_STR " ", &pos);
 }
 
 /**

@@ -1,0 +1,12 @@
+{
+    "name": "randomFake",
+    "version": "1.0.0",
+    "description": "Manage displaying graphics for the player",
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "*",
+    "dependencies": {
+        "CException": "^1.0.0",
+        "CMock": "^1.0.0"
+    }
+}

@@ -3,16 +3,8 @@
 #include <Graphics.hpp>
 #include <game_state.h>
 #include <util.h>
-
-/**
- * @brief Where the infrared receiver is getting its input
- */
-#define IR_RECEIVE_PIN 7
-
-/**
- * @brief Pin to identify if we are in the Wokwi simulator
- */
-#define WOKWI_PIN 13
+#include <calculator.h>
+#include <pins.h>
 
 /**
  * @brief The delay beyween reading Infrared inputs. Avoids
@@ -23,14 +15,7 @@
 /**
  * @brief How the LCD display is connected
  */
-lcd_pins graphics_pins = {
-    register_select : 12,
-    enable : 11,
-    d4 : 5,
-    d5 : 4,
-    d6 : 3,
-    d7 : 2
-};
+lcd_pins graphics_pins = LCD_PINS;
 
 /**
  * @brief The game state, reset on start up
@@ -45,7 +30,7 @@ byte powered = 1;
 /**
  * @brief Initialise the game
  */
-void setup()
+void SETUP()
 {
     Serial.begin(9600);
 
@@ -58,7 +43,7 @@ void setup()
 /**
  * @brief Run as fast as possible.
  */
-void loop()
+void LOOP()
 {
     /* Look for an input button */
     button button_pressed = get_button_pressed();

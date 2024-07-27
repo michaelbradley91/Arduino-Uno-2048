@@ -1,0 +1,7 @@
+:unity:
+  :includes:
+  :enforce_strict_ordering: true
+  :mock_prefix: ''
+  :mock_suffix: '_fake'
+  :plugins:
+    - :cexception

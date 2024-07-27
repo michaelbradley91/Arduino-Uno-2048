@@ -122,11 +122,11 @@ void reset_screen(void)
  * @param character - the character to draw
  * @param position - where to draw the character
  */
-void draw_character(const char character, position position)
+void draw_character(const char character, position *position)
 {
-    lcd.setCursor(position.x, position.y);
+    lcd.setCursor(position->x, position->y);
     lcd.write(character);
-    state.grid[position.x][position.y] = byte(character);
+    state.grid[position->x][position->y] = byte(character);
 }
 
 /**
@@ -182,7 +182,7 @@ char get_number_character(int number)
  * @param number - the number to draw - a power of 2 from 1 to 2048
  * @param position - where to draw the number
  */
-void draw_number(int number, position position)
+void draw_number(int number, position *position)
 {
     draw_character(get_number_character(number), position);
 }
@@ -195,12 +195,12 @@ void draw_number(int number, position position)
  * @param start_position - where to start drawing
  * @param length - how many bytes to read
  */
-void draw_bytes(const char *text, position start_position, size_t length)
+void draw_bytes(const char *text, position *start_position, size_t length)
 {
-    position new_position = start_position;
+    position new_position = *start_position;
     for (unsigned int i = 0; i < length; i++)
     {
-        draw_character(text[i], new_position);
+        draw_character(text[i], &new_position);
         new_position.x = new_position.x + 1;
     }
 }
@@ -211,7 +211,7 @@ void draw_bytes(const char *text, position start_position, size_t length)
  * @param text - the text to draw
  * @param start_position - where to start drawing
  */
-void draw_text(const char *text, position start_position)
+void draw_text(const char *text, position *start_position)
 {
     draw_bytes(text, start_position, strlen(text));
 }

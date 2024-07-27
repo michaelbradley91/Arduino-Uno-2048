@@ -10,9 +10,10 @@
 void init_start_scene(GameState *game_state)
 {
     /* Draw the welcome message */
-    
-    draw_text("Let's Play 2048!", {x: 0, y: 0});
-    draw_text(NUM_1024_STR "+" NUM_1024_STR "=2048 <Start>", {x: 0, y: 1});
+    position pos = {x: 0, y: 0};
+    draw_text("Let's Play 2048!", &pos);
+    pos = {x: 0, y: 1};
+    draw_text(NUM_1024_STR "+" NUM_1024_STR "=2048 <Start>", &pos);
 }
 
 /**

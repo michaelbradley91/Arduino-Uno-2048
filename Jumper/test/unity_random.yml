@@ -1,0 +1,14 @@
+:cmock:
+  :cexception_include: lib/CException/src
+  :enforce_strict_ordering: true
+  :mock_path: lib/RandomFake/src
+  :mock_prefix: ''
+  :mock_suffix: 'Fake'
+  :plugins:
+  - :ignore
+  - :ignore_arg
+  - :expect_any_args
+  - :array
+  - :cexception
+  - :callback
+  - :return_thru_ptr

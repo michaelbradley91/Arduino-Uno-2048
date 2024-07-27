@@ -22,7 +22,7 @@ static unsigned long get_random_byte()
 void init_random(void)
 {
     unsigned long random_value = millis();
-    for (int i = 0; i < sizeof(random_value); i++)
+    for (unsigned long i = 0; i < sizeof(random_value); i++)
     {
         random_value += (get_random_byte() << (i * 8));
     }
@@ -35,10 +35,8 @@ void init_random(void)
  *        is added
  * 
  * @param grid - the grid to add a number to
- * @return position - which cell was updated. Will be -1, -1 if none
  */
-
-position add_random_number_to_grid(Grid *grid)
+void add_random_number_to_grid(Grid *grid)
 {
     /* Count the number of free cells first */
     int number_free_cells = 0;
@@ -73,11 +71,9 @@ position add_random_number_to_grid(Grid *grid)
                 if (number_free_cells == free_cell)
                 {
                     grid->cells[x][y] = cell_value;
-                    return {x: x, y: y};
                 }
                 number_free_cells++;
             }
         }
     }
-    return {x: -1, y: -1};
 }

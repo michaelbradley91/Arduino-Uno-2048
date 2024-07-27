@@ -1,0 +1,8 @@
+{
+    "name": "CException",
+    "version": "1.0.0",
+    "description": "Manage displaying graphics for the player",
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "*"
+}

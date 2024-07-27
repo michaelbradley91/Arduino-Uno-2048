@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <position.h>
 
 /**
  * @brief Assume size of LCD board
@@ -82,15 +83,6 @@ typedef struct
     byte grid[LCD_WIDTH][LCD_HEIGHT];
 } lcd_state;
 
-/**
- * @brief Where to draw something on screen
- */
-typedef struct
-{
-    int x;
-    int y;
-} position;
-
 void init_graphics(lcd_pins pins);
 void turn_off_screen(void);
 void turn_on_screen(void);
@@ -98,9 +90,10 @@ void reset_screen(void);
 void use_play_characters(void);
 void use_win_characters(void);
 void use_lose_characters(void);
-void draw_character(const char character, position position);
+void draw_character(const char character, position *position);
 char get_number_character(int number);
-void draw_number(int number, position position);
-void draw_bytes(const char *text, position start_position, size_t length);
-void draw_text(const char *text, position start_position);
+void draw_number(int number, position *position);
+void draw_bytes(const char *text, position *start_position, size_t length);
+void draw_text(const char *text, position *start_position);
+
 lcd_state get_current_lcd_state();

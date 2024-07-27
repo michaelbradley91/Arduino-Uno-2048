@@ -1,0 +1,9 @@
+[submodule "Jumper/Unity"]
+	path = Jumper/Unity
+	url = git@github.com:ThrowTheSwitch/Unity.git
+[submodule "Jumper/CException"]
+	path = Jumper/CException
+	url = git@github.com:ThrowTheSwitch/CException.git
+[submodule "Jumper/CMock"]
+	path = Jumper/CMock
+	url = git@github.com:ThrowTheSwitch/CMock.git
