@@ -35,5 +35,10 @@ void render_start_scene(GameState *game_state)
  */
 void update_start_scene(GameState *game_state, button button_pressed)
 {
-    update_scene(game_state, SCENE_PLAY);
+    if (button_pressed != BUTTON_UNKNOWN && button_pressed != BUTTON_NONE)
+    {
+        Serial.println("Got button");
+        Serial.println(button_pressed);
+        update_scene(game_state, SCENE_PLAY);
+    }
 }
