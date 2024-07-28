@@ -42,8 +42,6 @@ static lcd_state state;
  */
 void init_graphics(lcd_pins pins)
 {
-    Serial.println("Init graphics");
-
     if (has_initialised) return;
     lcd = LiquidCrystal(pins.register_select, pins.enable, pins.d4, pins.d5, pins.d6, pins.d7);
     lcd.begin(LCD_WIDTH, LCD_HEIGHT);

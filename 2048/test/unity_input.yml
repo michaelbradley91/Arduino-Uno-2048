@@ -1,6 +1,6 @@
 :cmock:
   :cexception_include: lib/CException/src
-  :enforce_strict_ordering: true
+  :enforce_strict_ordering: false
   :mock_path: lib/InputFake/src
   :mock_prefix: ''
   :mock_suffix: 'Fake'

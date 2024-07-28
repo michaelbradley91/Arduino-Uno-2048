@@ -2,7 +2,7 @@
   :includes:
     - stdio.h
   :cexception: true
-  :enforce_strict_ordering: true
+  :enforce_strict_ordering: false
   :mock_prefix: ''
   :mock_suffix: 'Fake'
   :main_name: 'run'

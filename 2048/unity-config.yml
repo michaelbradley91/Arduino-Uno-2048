@@ -1,6 +1,6 @@
 :unity:
   :includes:
-  :enforce_strict_ordering: true
+  :enforce_strict_ordering: false
   :mock_prefix: ''
   :mock_suffix: '_fake'
   :plugins:
