@@ -38,16 +38,19 @@ void test_setup_initialise_graphics_and_input_and_start_scene()
 
 /**
  * @brief Test that we play the game and everything at least basically works?
+ *        We sleep between button presses for dramatic effect... :D
  */
 void test_can_play_game_and_return_to_menu()
 {
     /* Initialise the program again */
     init_input_Expect(WOKWI_PIN, IR_RECEIVE_PIN);
     main_setup();
+    delay(1000);
 
     /* Press a button so that we can begin playing */
     get_button_pressed_ExpectAndReturn(BUTTON_ENTER);
     main_loop();
+    delay(1000);
 
     /* Check we have started playing */
     TEST_ASSERT_EQUAL(SCENE_PLAY, game_state.scene);
@@ -75,6 +78,7 @@ void test_can_play_game_and_return_to_menu()
     /* Press down to combine the two 2's */
     get_button_pressed_ExpectAndReturn(BUTTON_DOWN);
     main_loop();
+    delay(1000);
 
     /* Confirm the numbers slid and combined */
     TEST_ASSERT_EQUAL(0, game_state.grid.cells[0][0]);
@@ -84,6 +88,7 @@ void test_can_play_game_and_return_to_menu()
     /* Finally return back to the start menu */
     get_button_pressed_ExpectAndReturn(BUTTON_BACK);
     main_loop();
+    delay(1000);
 
     /* Check we arrived at the start scene */
     TEST_ASSERT_EQUAL(SCENE_START, game_state.scene);

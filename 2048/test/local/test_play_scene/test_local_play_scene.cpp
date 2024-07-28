@@ -209,6 +209,7 @@ void test_back_button_returns_to_start_scene()
 {
     /* Initialise the play scene */
     init_random_Expect();
+    use_play_characters_Expect();
     add_random_number_to_grid_Expect(grid);
     add_random_number_to_grid_Expect(grid);
     init_play_scene(&game_state);
