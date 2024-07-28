@@ -1,3 +1,4 @@
 import os
 
-os.system("make mocks")
+os.system("make clean")
+os.system("make all")

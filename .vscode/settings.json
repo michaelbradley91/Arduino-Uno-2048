@@ -8,7 +8,6 @@
         "**/Thumbs.db": true,
         "**/.ruby-lsp": true,
         "Jumper/CException": true,
-        "Jumper/CMock": true,
-        "Jumper/Unity": true
+        "Jumper/CMock": true
     }
 }

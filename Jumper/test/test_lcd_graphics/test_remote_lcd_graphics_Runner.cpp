@@ -4,13 +4,14 @@
 #include "unity.h"
 #include "stdio.h"
 #include <Graphics.hpp>
-#include <play_scene.h>
+#include <Arduino.h>
+#include <pins.h>
 #include "CException.h"
 
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
-extern void test_get_position_for_cell_uses_both_rectangles();
+extern void test_reset_screen_does_clear_the_screen();
 
 
 /*=======Mock Management=====*/
@@ -22,6 +23,18 @@ static void CMock_Verify(void)
 }
 static void CMock_Destroy(void)
 {
+}
+
+/*=======Suite Setup=====*/
+void suiteSetUp(void)
+{
+Serial.begin(9600); init_graphics(LCD_PINS); delay(1000);
+}
+
+/*=======Suite Teardown=====*/
+int suiteTearDown(int num_failures)
+{
+return num_failures; } void loop() {
 }
 
 /*=======Test Reset Options=====*/
@@ -76,10 +89,12 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
 /*=======Parameterized Test Wrappers=====*/
 
 /*=======MAIN=====*/
-int main(void)
+int run(void); void setup() {run();} int run(void);
+int run(void)
 {
-  UnityBegin("test/test_play_scene/test_play_scene.cpp");
-  run_test(test_get_position_for_cell_uses_both_rectangles, "test_get_position_for_cell_uses_both_rectangles", 18);
+  suiteSetUp();
+  UnityBegin("test/test_lcd_graphics/test_remote_lcd_graphics.cpp");
+  run_test(test_reset_screen_does_clear_the_screen, "test_reset_screen_does_clear_the_screen", 20);
 
-  return UNITY_END();
+  return suiteTearDown(UNITY_END());
 }

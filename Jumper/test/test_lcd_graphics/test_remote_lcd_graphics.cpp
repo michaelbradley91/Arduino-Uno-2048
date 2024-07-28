@@ -40,19 +40,3 @@ void test_reset_screen_does_clear_the_screen()
         }
     }
 }
-
-void setup() {
-    // NOTE!!! Wait for >2 secs
-    // if board doesn't support software reset via Serial.DTR/RTS
-    Serial.begin(9600);
-    init_graphics(LCD_PINS);
-    delay(1000);
-
-    UNITY_BEGIN();
-    RUN_TEST(test_reset_screen_does_clear_the_screen);
-    UNITY_END();
-}
-
-void loop() {
-
-}

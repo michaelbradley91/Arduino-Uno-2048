@@ -4,14 +4,13 @@
 #include "unity.h"
 #include "stdio.h"
 #include <Graphics.hpp>
-#include <Arduino.h>
-#include <pins.h>
+#include <play_scene.h>
 #include "CException.h"
 
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
-extern void test_reset_screen_does_clear_the_screen();
+extern void test_get_position_for_cell_uses_both_rectangles();
 
 
 /*=======Mock Management=====*/
@@ -24,6 +23,12 @@ static void CMock_Verify(void)
 static void CMock_Destroy(void)
 {
 }
+
+/*=======Setup (stub)=====*/
+void setUp(void) {}
+
+/*=======Teardown (stub)=====*/
+void tearDown(void) {}
 
 /*=======Test Reset Options=====*/
 void resetTest(void);
@@ -79,8 +84,8 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
 /*=======MAIN=====*/
 int main(void)
 {
-  UnityBegin("test/test_lcd_graphics/test_lcd_graphics.cpp");
-  run_test(test_reset_screen_does_clear_the_screen, "test_reset_screen_does_clear_the_screen", 20);
+  UnityBegin("test/test_play_scene/test_local_play_scene.cpp");
+  run_test(test_get_position_for_cell_uses_both_rectangles, "test_get_position_for_cell_uses_both_rectangles", 12);
 
   return UNITY_END();
 }

@@ -3,12 +3,12 @@
     - stdio.h
   :cexception: true
   :enforce_string_ordering: true
-  :externc:
   :mock_prefix: ''
   :mock_suffix: 'Fake'
-  :main_name: setup
-  :suiteSetUp: 'Serial.begin(9600); init_graphics(LCD_PINS); delay(1000);'
-  :suiteTearDown: '} void loop() {'
+  :main_name: 'run'
+  :main_export_decl: 'int run(void); void setup() {run();}'
+  :suite_setup: 'Serial.begin(9600); init_graphics(LCD_PINS); delay(1000);'
+  :suite_teardown: 'return num_failures; } void loop() {'
   :plugins:
     - :cexception
   :use_param_tests: true
