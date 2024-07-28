@@ -7,7 +7,7 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
         "**/.ruby-lsp": true,
-        "Jumper/CException": true,
-        "Jumper/CMock": true
+        "2048/CException": true,
+        "2048/CMock": true
     }
 }
