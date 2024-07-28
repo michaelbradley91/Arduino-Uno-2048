@@ -11,7 +11,7 @@ the game for free in many places online,
 
 This what it looks like! 😃
 
-![Let's Play on Arduino Uno](lets_play.jpeg)
+![Let's Play on Arduino Uno](lets_play.png)
 
 Since the LCD display has only 16 x 2 cells, the 4 x 4 grid
 used in 2048 is split in half, with the top half of the grid
@@ -19,7 +19,7 @@ on the left, and the bottom half on the right.
 
 Surprisingly, I think you'll get used to this pretty quickly.
 
-![Playing on Arduino Uno](playing.jpeg)
+![Playing on Arduino Uno](playing.png)
 
 It's in a tub to protect the wires from my cat btw... 🐈
 
