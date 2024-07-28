@@ -1,7 +1,7 @@
 :cmock:
   :cexception_include: lib/CException/src
   :enforce_strict_ordering: false
-  :mock_path: lib/RandomFake/src
+  :mock_path: lib/randomFake/src
   :mock_prefix: ''
   :mock_suffix: 'Fake'
   :plugins:
