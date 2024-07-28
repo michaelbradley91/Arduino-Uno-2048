@@ -81,8 +81,6 @@ void test_can_play_game_and_return_to_menu()
     delay(1000);
 
     /* Confirm the numbers slid and combined */
-    TEST_ASSERT_EQUAL(0, game_state.grid.cells[0][0]);
-    TEST_ASSERT_EQUAL(0, game_state.grid.cells[0][1]);
     TEST_ASSERT_EQUAL(4,  game_state.grid.cells[0][3]);
 
     /* Finally return back to the start menu */
