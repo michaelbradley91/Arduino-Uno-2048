@@ -7,6 +7,10 @@
 #include <play_scene.h>
 #include "CException.h"
 
+int GlobalExpectCount;
+int GlobalVerifyOrder;
+char* GlobalOrderError;
+
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
@@ -16,6 +20,9 @@ extern void test_get_position_for_cell_uses_both_rectangles();
 /*=======Mock Management=====*/
 static void CMock_Init(void)
 {
+  GlobalExpectCount = 0;
+  GlobalVerifyOrder = 0;
+  GlobalOrderError = NULL;
 }
 static void CMock_Verify(void)
 {

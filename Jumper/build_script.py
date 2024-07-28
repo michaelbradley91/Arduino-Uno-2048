@@ -1,4 +1,2 @@
 import os
-
-os.system("make clean")
-os.system("make all")
+os.system("make")
