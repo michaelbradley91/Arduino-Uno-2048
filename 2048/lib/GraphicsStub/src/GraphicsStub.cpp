@@ -1,7 +1,7 @@
 #include <CException.h>
 #include <GraphicsFake.hpp>
 #include <unity.h>
-#include <CMock.h>
+#include <cmock.h>
 
 /**
  * @brief The current state based on what the user has been running
