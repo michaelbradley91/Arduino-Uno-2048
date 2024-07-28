@@ -1,9 +1,9 @@
-# arduino-testing
+# Arduino Uno - 2048
 
 This repository is a demonstration of the Unity testing framework
 to automate tests against an Arduino Uno (REV3).
 
-## The Game - 2048
+## The Game
 
 The program that runs against the Arduino is "2048". You can play
 the game for free in many places online,
