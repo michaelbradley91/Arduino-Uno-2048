@@ -7,7 +7,7 @@
   :mock_suffix: 'Fake'
   :main_name: 'run'
   :main_export_decl: 'int run(void); void setup() {run();}'
-  :suite_setup: 'Serial.begin(9600); init_graphics(LCD_PINS); delay(1000);'
+  :suite_setup: 'Serial.begin(115200); delay(1000); init_graphics(LCD_PINS);'
   :suite_teardown: 'return num_failures; } void loop() {'
   :plugins:
     - :cexception

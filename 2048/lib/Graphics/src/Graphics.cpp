@@ -3,7 +3,6 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 
-
 /**
  * @brief Custom characters
  */
@@ -24,6 +23,8 @@ byte sad_top_right[] = { B00000, B00000, B00000, B11000, B00100, B00010, B01001,
 byte sad_bottom_left[] = { B10000, B10001, B01010, B00100, B00011, B00000, B00000, B00000 };
 byte sad_bottom_right[] = { B00001, B10001, B01010, B00100, B11000, B00000, B00000, B00000 };
 
+static int has_initialised = 0;
+
 /**
  * @brief The liquid crystal display itself
  */
@@ -41,9 +42,13 @@ static lcd_state state;
  */
 void init_graphics(lcd_pins pins)
 {
+    Serial.println("Init graphics");
+
+    if (has_initialised) return;
     lcd = LiquidCrystal(pins.register_select, pins.enable, pins.d4, pins.d5, pins.d6, pins.d7);
     lcd.begin(LCD_WIDTH, LCD_HEIGHT);
     reset_screen();
+    has_initialised = 1;
 }
 
 /**
@@ -124,6 +129,11 @@ void reset_screen(void)
  */
 void draw_character(const char character, position *position)
 {
+    /* Refuse to draw if outside the bounds of the LCD screen */
+    if (position->x < 0 || position->x >= LCD_WIDTH || position->y < 0 || position->y >= LCD_HEIGHT)
+    {
+        return;
+    }
     lcd.setCursor(position->x, position->y);
     lcd.write(character);
     state.grid[position->x][position->y] = byte(character);
@@ -172,7 +182,7 @@ char get_number_character(int number)
         case 1024:
             return NUM_1024;
         default:
-            return ' ';
+            return CELL_CLEAR;
     }
 }
 

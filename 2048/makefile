@@ -7,11 +7,14 @@
 RUNNER_GENERATOR=Unity/auto/generate_test_runner.rb
 LOCAL_RUNNER_CONFIG=test/unity_local.yml
 REMOTE_RUNNER_CONFIG=test/unity_remote.yml
-EXISTING_RUNNERS=$(wildcard test/**/*_Runner.cpp)
-TEST_LOCAL_C_FILES=$(filter-out ${EXISTING_RUNNERS},$(wildcard test/**/test_local_*.cpp))
-TEST_REMOTE_C_FILES=$(filter-out ${EXISTING_RUNNERS},$(wildcard test/**/test_remote_*.cpp))
+EXISTING_RUNNERS=$(wildcard test/*/*/*_Runner.cpp)
+TEST_LOCAL_C_FILES=$(filter-out ${EXISTING_RUNNERS},$(wildcard test/local/*/test_*.cpp))
+TEST_REMOTE_C_FILES=$(filter-out ${EXISTING_RUNNERS},$(wildcard test/remote/*/test_*.cpp))
 TEST_LOCAL_RUNNER_FILES=$(patsubst %.cpp,%_Runner.cpp,${TEST_LOCAL_C_FILES})
 TEST_REMOTE_RUNNER_FILES=$(patsubst %.cpp,%_Runner.cpp,${TEST_REMOTE_C_FILES})
+
+$(info "Remote runners ${TEST_REMOTE_RUNNER_FILES}")
+$(info "Existing runners ${EXISTING_RUNNERS}")
 
 ${TEST_LOCAL_RUNNER_FILES}: %_Runner.cpp: %.cpp
 	ruby ${RUNNER_GENERATOR} $^ ${LOCAL_RUNNER_CONFIG}

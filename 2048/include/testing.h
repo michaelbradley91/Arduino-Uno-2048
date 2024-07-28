@@ -5,14 +5,16 @@
  */
 #ifdef PIO_UNIT_TESTING
 
-#define LOOP main_loop
-#define SETUP main_setup
+#define MAIN_LOOP main_loop
+#define MAIN_SETUP main_setup
 #define STATIC 
+#define SERIAL_BEGIN(SPEED) 
 
 #else
 
-#define LOOP loop
-#define SETUP setup
+#define MAIN_LOOP loop
+#define MAIN_SETUP setup
 #define STATIC static
+#define SERIAL_BEGIN(SPEED) Serial.begin(SPEED)
 
 #endif

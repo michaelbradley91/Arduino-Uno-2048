@@ -14,26 +14,25 @@
 /**
  * @brief How the LCD display is connected
  */
-lcd_pins graphics_pins = LCD_PINS;
+STATIC lcd_pins graphics_pins = LCD_PINS;
 
 /**
  * @brief The game state, reset on start up
  */
-GameState game_state = {};
+STATIC GameState game_state = {};
 
 /**
  * @brief Whether or not the game is powered on
  */
-byte powered = 1;
+STATIC byte powered = 1;
 
 /**
  * @brief Initialise the game
  */
-void SETUP()
+void MAIN_SETUP()
 {
-    Serial.begin(9600);
-
-    init_input(WOKWI_PIN, IR_RECEIVE_PIN);
+    SERIAL_BEGIN(115200);
+    // init_input(WOKWI_PIN, IR_RECEIVE_PIN);
     init_graphics(graphics_pins);
     reset_game_state(&game_state);
     update_scene(&game_state, SCENE_START);
@@ -42,7 +41,7 @@ void SETUP()
 /**
  * @brief Run as fast as possible.
  */
-void LOOP()
+void MAIN_LOOP()
 {
     /* Look for an input button */
     button button_pressed = get_button_pressed();

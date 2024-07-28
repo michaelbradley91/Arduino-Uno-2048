@@ -16,7 +16,8 @@
 			"game_state.h": "c",
 			"type_traits": "cpp",
 			"xtr1common": "cpp",
-			"unity_config.h": "c"
+			"unity_config.h": "c",
+			"new": "cpp"
 		}
 	}
 }
