@@ -24,6 +24,7 @@ void setUp()
 void test_setup_displays_start_scene()
 {
     /* Invoke the setup routine */
+    init_input_Expect(WOKWI_PIN, IR_RECEIVE_PIN);
     init_graphics_Expect(LCD_PINS);
     main_setup();
 
@@ -38,6 +39,7 @@ void test_setup_displays_start_scene()
 void test_power_button_toggles_screen_on_and_off()
 {
     /* Initialise the program */
+    init_input_Expect(WOKWI_PIN, IR_RECEIVE_PIN);
     init_graphics_Expect(LCD_PINS);
     main_setup();
 

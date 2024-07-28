@@ -32,7 +32,7 @@ STATIC byte powered = 1;
 void MAIN_SETUP()
 {
     SERIAL_BEGIN(115200);
-    // init_input(WOKWI_PIN, IR_RECEIVE_PIN);
+    init_input(WOKWI_PIN, IR_RECEIVE_PIN);
     init_graphics(graphics_pins);
     reset_game_state(&game_state);
     update_scene(&game_state, SCENE_START);
