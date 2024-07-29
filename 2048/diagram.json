@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "Michael Bradley",
+  "author": "Michael B",
   "editor": "wokwi",
   "parts": [
     { "type": "wokwi-breadboard", "id": "bb1", "top": -99, "left": -141.2, "attrs": {} },

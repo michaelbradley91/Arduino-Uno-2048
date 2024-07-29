@@ -57,7 +57,7 @@ CMOCK_MEM_INDEX_TYPE CMock_Guts_MemNew(CMOCK_MEM_INDEX_TYPE size)
 #else
     /* our dynamic buffer does not have enough room; request more via realloc() */
     CMOCK_MEM_INDEX_TYPE new_buffersize = CMock_Guts_BufferSize + CMOCK_MEM_SIZE + size;
-    unsigned char* new_buffer = realloc(CMock_Guts_Buffer, (size_t)new_buffersize);
+    unsigned char* new_buffer = (unsigned char *)realloc(CMock_Guts_Buffer, (size_t)new_buffersize);
     if (new_buffer == NULL)
       return CMOCK_GUTS_NONE; /* realloc() failed; out of memory */
     CMock_Guts_Buffer = new_buffer;
